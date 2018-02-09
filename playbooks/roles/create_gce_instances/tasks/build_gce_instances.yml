@@ -110,7 +110,9 @@
     loop_var: instance_data
 
 - name: Add host to groupname
-  add_host: hostname={{ instance_data.public_ip }} groupname=container_hosts
+  add_host:
+    hostname={{ instance_data.public_ip }}
+    groupname=container_hosts
   with_items: "{{ gce.instance_data }}"
   loop_control:
     loop_var: instance_data

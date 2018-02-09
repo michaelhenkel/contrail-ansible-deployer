@@ -13,7 +13,7 @@ export LIBGUESTFS_BACKEND=direct
 {% endfor %}
 --run-command 'systemctl enable sshd' \
 --run-command 'cat /dev/zero | ssh-keygen -q -N ""' \
-{% if pub_key %}
+{% if pub_key is defined %}
 --run-command 'echo {{ pub_key }} >> /root/.ssh/authorized_keys' \
 --run-command 'chmod 600 /root/.ssh/authorized_keys' \
 {% endif %}

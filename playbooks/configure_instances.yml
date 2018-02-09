@@ -5,8 +5,8 @@
   roles:
   - create_container_host_group
   vars_files:
-    - "{{ vars_dir }}/instances.yml"
-    - "{{ vars_dir }}/accounts.yml"
+    - "{{ config_dir }}/instances.yml"
+    - "{{ config_dir }}/accounts.yml"
 
 - name: Configure instance(s)
   hosts: container_hosts
@@ -14,5 +14,5 @@
   roles:
   - configure_instances
   vars_files:
-    - "{{ vars_dir }}/instances.yml"
-    - "{{ vars_dir }}/accounts.yml"
+  - "{{ hostvars['localhost'].config_dir }}/instances.yml"
+  - "{{ hostvars['localhost'].config_dir }}/accounts.yml"
