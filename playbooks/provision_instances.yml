@@ -5,8 +5,9 @@
   roles:
   - create_gce_instances
   vars_files:
-  - "{{ config_dir }}/instances.yml"
-  - "{{ config_dir }}/accounts.yml"
+  - "{{ config_dir }}/instances"
+#  - "{{ config_dir }}/instances.yml"
+#  - "{{ config_dir }}/accounts.yml"
   tags:
   - create_gce_instances
 
@@ -17,8 +18,9 @@
   roles:
   - get_kvm_instances
   vars_files:
-  - "{{ config_dir }}/instances.yml"
-  - "{{ config_dir }}/accounts.yml"
+  - "{{ config_dir }}/instances"
+#  - "{{ config_dir }}/instances.yml"
+#  - "{{ config_dir }}/accounts.yml"
   tags:
   - create_kvm_instances
 
@@ -27,7 +29,8 @@
   roles:
   - create_kvm_instances
   vars_files:
-  - "{{ hostvars['localhost'].config_dir }}/instances.yml"
-  - "{{ hostvars['localhost'].config_dir }}/accounts.yml"
+  - "{{ hostvars['localhost'].config_dir }}/instances"
+#  - "{{ hostvars['localhost'].config_dir }}/instances.yml"
+#  - "{{ hostvars['localhost'].config_dir }}/accounts.yml"
   tags:
   - create_kvm_instances
