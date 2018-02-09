@@ -7,6 +7,8 @@
   vars_files:
     - "{{ config_dir }}/instances.yml"
     - "{{ config_dir }}/accounts.yml"
+  tags:
+  - install_contrail
 
 - name: Install Contrail
   hosts: container_hosts
@@ -16,3 +18,6 @@
   vars_files:
   - "{{ hostvars['localhost'].config_dir }}/instances.yml"
   - "{{ hostvars['localhost'].config_dir }}/accounts.yml"
+  tags:
+  - install_contrail
+

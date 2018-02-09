@@ -239,6 +239,6 @@
 
 - name: create contrail kube manager
   include: create_kube_manager.yml
-  when: roles[ansible_hostname].k8s_master is defined and hostvars[ansible_hostname].master == inventory_hostname
+  when: roles[ansible_hostname].k8s_master is defined and inventory_hostname == master
   tags:
     - k8s

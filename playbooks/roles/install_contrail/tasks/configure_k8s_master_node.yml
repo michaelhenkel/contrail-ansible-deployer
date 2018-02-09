@@ -24,12 +24,18 @@
   set_fact:
     controller_list: "{{ contrail_configuration.CONTROLLER_NODES.split(',') }}"
 
+- debug:
+    msg: "c list {{ controller_list }}"
+
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_all_ipv4_addresses }}"
+
 - name: get controller ip from all ips
   set_fact:
     listen_ip: "{{ item[0] }}"
   when: item[0] == item[1]
   with_nested:
-    - "{{ hostvars[ansible_hostname].ansible_all_ipv4_addresses }}"
+    - "{{ hostvars[inventory_hostname].ansible_all_ipv4_addresses }}"
     - "{{ controller_list }}"
 
 #- name: initialize k8s master with listen ip
