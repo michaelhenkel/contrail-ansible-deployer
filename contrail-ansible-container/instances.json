@@ -1,0 +1,61 @@
+{
+  "provider_config": {
+    "kvm": {
+      "image": "CentOS-7-x86_64-GenericCloud-1710.qcow2.xz",
+      "image_url": "http://10.87.64.32/",
+      "ssh_pwd": "contrail123",
+      "ssh_user": "root",
+      "vcpu": 12,
+      "vram": 64000,
+      "vdisk": "100G",
+      "subnet_prefix": "192.168.1.0",
+      "subnet_netmask": "255.255.255.0",
+      "gateway": "192.168.1.1",
+      "nameserver": "10.84.5.100",
+      "ntpserver": "192.168.1.1",
+      "domainsuffix": "local"
+    },
+    "gce": {
+      "ssh_user": "mhenkel",
+      "machine_type": "n1-standard-4",
+      "image": "centos-7",
+      "network": "microservice-vn",
+      "subnetwork": "microservice-sn",
+      "zone": "us-west1-a",
+      "disk_size": 50
+    }
+  },
+  "instances": {
+    "kvm1": {
+      "provider": "kvm",
+      "host": "10.87.64.31",
+      "bridge": "br1",
+      "ip": "192.168.1.100"
+    },
+    "kvm2": {
+      "provider": "kvm",
+      "host": "10.87.64.32",
+      "bridge": "br1",
+      "ip": "192.168.1.101"
+    },
+    "kvm3": {
+      "provider": "kvm",
+      "host": "10.87.64.33",
+      "bridge": "br1",
+      "ip": "192.168.1.102"
+    },
+    "kvm4": {
+      "provider": "kvm",
+      "host": "10.87.64.33",
+      "bridge": "br1",
+      "ip": "192.168.1.104",
+      "roles": {
+        "vrouter": null
+      }
+    }
+  },
+  "contrail_configuration": {
+    "CONTAINER_REGISTRY": "michaelhenkel",
+    "CONTRAIL_VERSION": "5.0.0-134-centos7-ocata"
+  }
+}

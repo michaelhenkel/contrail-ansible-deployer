@@ -1,0 +1,7 @@
+{
+  "gce_credentials": {
+    "service_account_email": "787602079303-compute@developer.gserviceaccount.com",
+    "credentials_file": "/root/config/gce.json",
+    "project_id": "contrail-solutions-group"
+  }
+}
