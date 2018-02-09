@@ -1,0 +1,38 @@
+- name: set instance var file when defined
+  set_fact:
+    instance_vars: "{{ var_dir }}/instances.yml"
+  when: var_dir is defined
+
+- name: set instance var file when undefined
+  set_fact:
+    instance_vars: "../inventory/instances.yml"
+  when: var_dir is undefined
+
+- name: set accounts var file when defined
+  set_fact:
+    account_vars: "{{ var_dir }/accounts.yml"
+  when: var_dir is defined
+
+- name: set accounts var file when undefined
+  set_fact:
+    account_vars: "../inventory/accounts.yml"
+  when: var_dir is undefined
+
+- name: Create container host group
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+  - create_container_host_group
+  vars_files:
+    - "{{ instance_vars }}"
+    - "{{ accounts_vars }}"
+
+- name: Install Contrail
+  hosts: container_hosts
+  gather_facts: yes
+  roles:
+  - install_contrail
+  vars_files:
+    - "{{ instance_vars }}"
+    - "{{ accounts_vars }}"
