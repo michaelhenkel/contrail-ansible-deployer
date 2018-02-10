@@ -1,1 +1,1 @@
-ANSIBLE_CONFIG=/etc/ansible/ansible.cfg ansible-playbook -i /contrail-ansible-deployer/inventory /contrail-ansible-deployer/playbooks/provision_instances.yml
+ANSIBLE_CONFIG=/etc/ansible/ansible.cfg ansible-playbook -e config_dir=/configs/ -i /contrail-ansible-deployer/inventory /contrail-ansible-deployer/playbooks/provision_instances.yml
