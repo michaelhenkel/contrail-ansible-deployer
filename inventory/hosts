@@ -1,2 +1,2 @@
 [localhost]
-localhost config_dir=/configs/
+localhost config_dir=../inventory

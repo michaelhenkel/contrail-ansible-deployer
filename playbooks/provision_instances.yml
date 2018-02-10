@@ -6,8 +6,6 @@
   - create_gce_instances
   vars_files:
   - "{{ config_dir }}/instances"
-#  - "{{ config_dir }}/instances.yml"
-#  - "{{ config_dir }}/accounts.yml"
   tags:
   - create_gce_instances
 
@@ -19,8 +17,6 @@
   - get_kvm_instances
   vars_files:
   - "{{ config_dir }}/instances"
-#  - "{{ config_dir }}/instances.yml"
-#  - "{{ config_dir }}/accounts.yml"
   tags:
   - create_kvm_instances
 
@@ -30,7 +26,5 @@
   - create_kvm_instances
   vars_files:
   - "{{ hostvars['localhost'].config_dir }}/instances"
-#  - "{{ hostvars['localhost'].config_dir }}/instances.yml"
-#  - "{{ hostvars['localhost'].config_dir }}/accounts.yml"
   tags:
   - create_kvm_instances

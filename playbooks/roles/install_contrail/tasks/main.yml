@@ -94,10 +94,19 @@
   tags:
    - always
 
-- name: add controllers to the list
+- name: get gce controllers
+  include: get_gce_controller.yml
+#  set_fact:
+#    controller_list: "{{ controller_list + [ hostvars[item.key].private_ip ] }}"
+  when: item.value.config is defined and instances[item.key].provider == 'gce'
+  with_dict: "{{ roles }}"
+  tags:
+   - always
+
+- name: add kvm controllers to the list
   set_fact:
     controller_list: "{{ controller_list + [ instances[item.key].ip ] }}"
-  when: item.value.config is defined
+  when: item.value.config is defined and instances[item.key].provider == 'kvm'
   with_dict: "{{ roles }}"
   tags:
    - always

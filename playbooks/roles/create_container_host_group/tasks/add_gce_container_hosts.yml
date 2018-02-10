@@ -93,9 +93,9 @@
       instance_names: "{{ item.key }}"
       machine_type: "{{ machine_type }}"
       image: "{{ image }}"
-      service_account_email: "{{ gce_credentials.service_account_email }}"
-      credentials_file: "{{ gce_credentials.credentials_file }}"
-      project_id: "{{ gce_credentials.project_id }}"
+      service_account_email: "{{ provider_config.gce.service_account_email }}"
+      credentials_file: "{{ provider_config.gce.credentials_file }}"
+      project_id: "{{ provider_config.gce.project_id }}"
       network: "{{ network }}"
       subnetwork: "{{ subnetwork }}"
       zone: "{{ zone }}"
@@ -106,9 +106,31 @@
 - debug:
     msg: "{{ gce.instance_data }}"
 
-- name: add gce container hosts
+- name: add gce container hosts with ssh pwd
+  add_host:
+    hostname: "{{ gce.instance_data[0].public_ip }}"
+    groupname: container_hosts
+    ansible_ssh_user: "{{ provider_config.gce.ssh_user }}"
+    ansible_ssh_pass: "{{ provider_config.gce.ssh_pwd }}"
+    ansible_become: true
+    private_ip: "{{ gce.instance_data[0].private_ip }}"
+  when: provider_config.gce.ssh_pwd is defined and provider_config.gce.ssh_private_key is undefined
+
+- name: add gce container hosts with ssh key
+  add_host:
+    hostname: "{{ gce.instance_data[0].public_ip }}"
+    groupname: container_hosts
+    ansible_ssh_user: "{{ provider_config.gce.ssh_user }}"
+    ansible_ssh_private_key_file: "{{ provider_config.gce.ssh_private_key }}"
+    ansible_become: true
+    private_ip: "{{ gce.instance_data[0].private_ip }}"
+  when: provider_config.gce.ssh_private_key is defined
+
+- name: add gce container hosts with ssh key
   add_host:
     hostname: "{{ gce.instance_data[0].public_ip }}"
     groupname: container_hosts
     ansible_ssh_user: "{{ provider_config.gce.ssh_user }}"
     ansible_become: true
+    private_ip: "{{ gce.instance_data[0].private_ip }}"
+  when: provider_config.gce.ssh_private_key is undefined and provider_config.gce.ssh_private_key is undefined
