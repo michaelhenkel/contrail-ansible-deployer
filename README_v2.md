@@ -127,6 +127,7 @@ instances:
         control                  # Optional.
         analytics_database       # Optional.
         analytics                # Optional.
+        webui                    # Optional.
         k8s_master               # Optional.
         k8s_node                 # Optional.
         vrouter                  # Optional.
@@ -134,7 +135,7 @@ instances:
     provider: gce
   gce3:
     provider: gce
-#  kvm1:                        # Mandatory. Instance name
+#  kvm1:                        # Mandatory. Instance name. Provisiong play sets instance name as hostname.
 #    provider: kvm              # Mandatory. Instance runs on kvm
 #    host: 10.87.64.31          # Mandatory for provision play. KVM host.
 #    bridge: br1                # Mandatory for provision play. Bridge to which instance is connected to
@@ -145,6 +146,7 @@ instances:
 #      control                  # Optional.
 #      analytics_database       # Optional.
 #      analytics                # Optional.
+#      webui                    # Optional.
 #      k8s_master               # Optional.
 #      k8s_node                 # Optional.
 #      vrouter                  # Optional.
