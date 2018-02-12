@@ -65,8 +65,8 @@ The playbook contains three plays:
 
 - playbooks/provision_instances.yml    
 
-Provisions operating system instances hosting the containers.    
-Can be used for the following infrastructure providers:    
+Provisions operating system instances for hosting the containers    
+to the following providers:    
 -- kvm    
 -- gce    
 -- aws (to be implemented)    
@@ -126,6 +126,7 @@ instances:
         config                   # Optional.
         control                  # Optional.
         analytics_database       # Optional.
+        analytics                # Optional.
         k8s_master               # Optional.
         k8s_node                 # Optional.
         vrouter                  # Optional.
@@ -143,6 +144,7 @@ instances:
 #      config                   # Optional.
 #      control                  # Optional.
 #      analytics_database       # Optional.
+#      analytics                # Optional.
 #      k8s_master               # Optional.
 #      k8s_node                 # Optional.
 #      vrouter                  # Optional.
