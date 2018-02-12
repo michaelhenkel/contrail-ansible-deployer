@@ -4,6 +4,7 @@
     groupname: kvm_instances
     ansible_ssh_pass: "{{ provider_config.kvm.ssh_pwd }}"
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
+    instance_name: "{{ item.key }}"
   when: item.value.provider=='kvm' and provider_config.kvm.ssh_pwd is defined and provider_config.kvm.ssh_user is defined
   with_dict: "{{ instances }}"
 
@@ -13,6 +14,7 @@
     groupname: kvm_instances
     ansible_ssh_private_key_file: "{{ provider_config.kvm.ssh_private_key }}"
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
+    instance_name: "{{ item.key }}"
   when: item.value.provider=='kvm' and provider_config.kvm.ssh_private_key is defined
   with_dict: "{{ instances }}"
 

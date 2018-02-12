@@ -4,6 +4,7 @@
     groupname: container_hosts
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
     ansible_ssh_pass: "{{ provider_config.kvm.ssh_pwd }}"
+    instance_name: "{{ item.key }}"
   when: item.value.provider=='kvm' and provider_config.kvm.ssh_pwd is defined
   with_dict: "{{ instances }}"
   tags:
@@ -16,6 +17,7 @@
     groupname: container_hosts
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
     ansible_ssh_private_key_file: "{{ provider_config.kvm.ssh_private_key }}"
+    instance_name: "{{ item.key }}"
   when: item.value.provider=='kvm' and provider_config.kvm.ssh_private_key is defined
   with_dict: "{{ instances }}"
   tags:

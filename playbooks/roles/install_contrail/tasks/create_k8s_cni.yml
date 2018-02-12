@@ -27,7 +27,7 @@
 
 - name: "populate pod specific common_cni.env"
   lineinfile: dest=/etc/contrail/common_cni.env regexp='.*{{ config_item.key }}$' line="{{ config_item.key }}={{ config_item.value }}" state=present
-  with_dict: "{{ roles[ansible_hostname].k8s_master }}"
+  with_dict: "{{ roles[instance_name].k8s_master }}"
   loop_control:
     loop_var: config_item
   ignore_errors: yes

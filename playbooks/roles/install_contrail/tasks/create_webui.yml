@@ -27,7 +27,7 @@
 
 - name: "populate pod specific common_webui.env"
   lineinfile: dest=/etc/contrail/common_webui.env regexp='.*{{ config_item.key }}$' line="{{ config_item.key }}={{ config_item.value }}" state=present
-  with_dict: "{{ roles[ansible_hostname].control }}"
+  with_dict: "{{ roles[instance_name].control }}"
   loop_control:
     loop_var: config_item
   ignore_errors: yes

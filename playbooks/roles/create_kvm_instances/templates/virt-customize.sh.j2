@@ -6,11 +6,6 @@ export LIBGUESTFS_BACKEND=direct
 --hostname {{ container_vm_hostname }}.{{ domainsuffix }} \
 --run-command 'sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config' \
 --run-command 'sed -i "s/#UseDNS yes/UseDNS no/g" /etc/ssh/sshd_config' \
-{% for instance in instances %}
-{% if instances[instance].provider == 'kvm' %}
---run-command 'echo {{ instances[instance].ip }} {{ instance }}.{{ domainsuffix }} {{ instance }} >> /etc/hosts' \
-{% endif %}
-{% endfor %}
 --run-command 'systemctl enable sshd' \
 --run-command 'cat /dev/zero | ssh-keygen -q -N ""' \
 {% if pub_key is defined %}

@@ -1,10 +1,7 @@
 ---
-- debug:
-    msg: "{{ ansible_hostname }}"
-
 - name: set instance data
   set_fact:
-    instance_data: "{{ instances[ansible_hostname] }}"
+    instance_data: "{{ instances[hostvars[inventory_hostname].instance_name] }}"
 
 - name: set provider data
   set_fact:
@@ -84,9 +81,15 @@
   pip:
     name: docker-compose==1.9.0
 
-#- name: "Build hosts file"
-#  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ item }} {{ item.replace('.','-') }}.{{ hostvars[groups['hypervisors'][0]].CONTAINER_VM_CONFIG.network.domainsuffix }} {{ item.replace('.','-') }}" state=present
-#  with_items: "{{ hostvars[inventory_hostname].groups.container_hosts }}"
+- name: "Build hosts file with domain suffix when provided"
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ item }} {{ hostvars[item]['ansible_hostname'] }}.{{ provider_data.domainsuffix }} {{ hostvars[item]['ansible_hostname'] }}" state=present
+  with_items: "{{ hostvars[inventory_hostname].groups.container_hosts }}"
+  when: instance_data.provider == 'kvm' and provider_data.domainsuffix is defined
+
+- name: "Build hosts file without domain suffix when not provided (bad bad)"
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ item }} {{ hostvars[item]['ansible_hostname'] }}" state=present
+  with_items: "{{ hostvars[inventory_hostname].groups.container_hosts }}"
+  when: instance_data.provider == 'kvm' and provider_data.domainsuffix is undefined
 
 - name: create log file directory
   file:

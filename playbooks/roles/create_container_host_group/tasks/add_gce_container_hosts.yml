@@ -114,6 +114,7 @@
     ansible_ssh_pass: "{{ provider_config.gce.ssh_pwd }}"
     ansible_become: true
     private_ip: "{{ gce.instance_data[0].private_ip }}"
+    instance_name: "{{ item.key }}"
   when: provider_config.gce.ssh_pwd is defined and provider_config.gce.ssh_private_key is undefined
 
 - name: add gce container hosts with ssh key
@@ -124,6 +125,7 @@
     ansible_ssh_private_key_file: "{{ provider_config.gce.ssh_private_key }}"
     ansible_become: true
     private_ip: "{{ gce.instance_data[0].private_ip }}"
+    instance_name: "{{ item.key }}"
   when: provider_config.gce.ssh_private_key is defined
 
 - name: add gce container hosts with ssh key
@@ -133,4 +135,5 @@
     ansible_ssh_user: "{{ provider_config.gce.ssh_user }}"
     ansible_become: true
     private_ip: "{{ gce.instance_data[0].private_ip }}"
+    instance_name: "{{ item.key }}"
   when: provider_config.gce.ssh_private_key is undefined and provider_config.gce.ssh_private_key is undefined

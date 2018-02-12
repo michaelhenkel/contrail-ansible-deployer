@@ -27,15 +27,15 @@
 
 - name: "populate pod specific common_vrouter.env"
   lineinfile: dest=/etc/contrail/common_vrouter.env regexp='.*{{ config_item.key }}$' line="{{ config_item.key }}={{ config_item.value }}" state=present
-  with_dict: "{{ roles[ansible_hostname].vrouter }}"
+  with_dict: "{{ roles[instance_name].vrouter }}"
   loop_control:
     loop_var: config_item
   ignore_errors: yes
 
 - name: get pop
   set_fact:
-    pop: "{{ roles[ansible_hostname].vrouter.location }}"
-  when: roles[ansible_hostname].vrouter.location is defined
+    pop: "{{ roles[instance_name].vrouter.location }}"
+  when: roles[instance_name].vrouter.location is defined
 
 - name: "populate pop settings"
   lineinfile: dest=/etc/contrail/common_vrouter.env regexp='.*{{ pop_config.key }}$' line="{{ pop_config.key }}={{ pop_config.value }}" state=present

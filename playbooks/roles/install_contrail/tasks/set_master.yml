@@ -6,7 +6,7 @@
 - name: fill master list
   set_fact:
     master_list: "{{ master_list + [ item ] }}"
-  when: roles[hostvars[item]['ansible_hostname']].k8s_master is defined
+  when: roles[hostvars[item]['instance_name']].k8s_master is defined
   with_items: "{{ groups['container_hosts'] }}"
 
 - name: set master

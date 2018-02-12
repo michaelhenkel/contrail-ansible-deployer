@@ -113,6 +113,7 @@
   add_host:
     hostname={{ instance_data.public_ip }}
     groupname=container_hosts
+    instance_name: "{{ item.key }}"
   with_items: "{{ gce.instance_data }}"
   loop_control:
     loop_var: instance_data

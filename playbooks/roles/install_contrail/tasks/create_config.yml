@@ -27,8 +27,8 @@
 
 - name: "populate pod specific common_config.env"
   lineinfile: dest=/etc/contrail/common_config.env regexp='.*{{ item.key }}$' line="{{ item.key }}={{ item.value }}" state=present
-  with_dict: "{{ roles[ansible_hostname].config }} | default ({})"
-  when: roles[ansible_hostname].config.key is defined
+  with_dict: "{{ roles[instance_name].config }} | default ({})"
+  when: roles[instance_name].config.key is defined
   ignore_errors: yes
 
 - name: update image

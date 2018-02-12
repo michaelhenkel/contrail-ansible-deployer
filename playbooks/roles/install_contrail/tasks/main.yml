@@ -1,4 +1,12 @@
 ---
+- name: set instance data
+  set_fact:
+    instance_data: "{{ instances[hostvars[inventory_hostname].instance_name] }}"
+
+- name: set instance name
+  set_fact:
+    instance_name: "{{ hostvars[inventory_hostname].instance_name }}"
+
 - name: set contrail configuration param
   set_fact:
    contrail_configuration: {}
@@ -176,78 +184,78 @@
 
 - name: create contrail config datqbase
   include: create_config_database.yml
-  when: roles[ansible_hostname].config_database is defined
+  when: roles[instance_name].config_database is defined
   tags:
     - config_database
 
 - name: create contrail config
   include: create_config.yml
-  when: roles[ansible_hostname].config is defined
+  when: roles[instance_name].config is defined
   tags:
     - config
 
 - name: create contrail webui
   include: create_webui.yml
-  when: roles[ansible_hostname].webui is defined
+  when: roles[instance_name].webui is defined
   tags:
     - webui
 
 - name: create contrail control
   include: create_control.yml
-  when: roles[ansible_hostname].control is defined
+  when: roles[instance_name].control is defined
   tags:
    - control
 
 - name: create contrail control_only
   include: create_control_only.yml
-  when: roles[ansible_hostname].control_only is defined
+  when: roles[instance_name].control_only is defined
   tags:
     - control_only
 
 - name: create contrail analytics database
   include: create_analytics_database.yml
-  when: roles[ansible_hostname].analytics_database is defined
+  when: roles[instance_name].analytics_database is defined
   tags:
     - analytics_database
 
 - name: create contrail analytics
   include: create_analytics.yml
-  when: roles[ansible_hostname].analytics is defined
+  when: roles[instance_name].analytics is defined
   tags:
     - analytics
 
 - name: create contrail vrouter
   include: create_vrouter.yml
-  when: roles[ansible_hostname].vrouter is defined
+  when: roles[instance_name].vrouter is defined
   tags:
     - vrouter
 
 - name: set master
   include: set_master.yml
-  when: roles[ansible_hostname].k8s_master is defined or roles[ansible_hostname].k8s_node is defined
+  when: roles[instance_name].k8s_master is defined or roles[instance_name].k8s_node is defined
   tags:
     - k8s
 
 - name: create cni
   include: create_k8s_cni.yml
-  when: roles[ansible_hostname].k8s_node is defined
+  when: roles[instance_name].k8s_node is defined
   tags:
     - k8s
 
 - name: configure k8s master
   include: configure_k8s_master_node.yml
-  when: roles[ansible_hostname].k8s_master is defined and master is defined and inventory_hostname == master
+  when: roles[instance_name].k8s_master is defined and master is defined and inventory_hostname == master
   tags:
     - k8s
 
 - name: join k8s master
   include: configure_k8s_join_node.yml
-  when: roles[ansible_hostname].k8s_node is defined and master is defined and inventory_hostname != master
+  when: roles[instance_name].k8s_node is defined and master is defined and inventory_hostname != master
   tags:
     - k8s
 
 - name: create contrail kube manager
   include: create_kube_manager.yml
-  when: roles[ansible_hostname].k8s_master is defined and inventory_hostname == master
+  when: roles[instance_name].k8s_master is defined and inventory_hostname == master
   tags:
     - k8s

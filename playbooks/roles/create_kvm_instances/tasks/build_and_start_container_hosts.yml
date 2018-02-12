@@ -119,9 +119,15 @@
     domainsuffix: "{{ instance_data.domainsuffix }}"
   when: instance_data.domainsuffix is defined
 
-- name: set hostname
+- name: set hostname to instance name if not defined
   set_fact:
-    container_vm_hostname: "{{ item.key }}"
+    container_vm_hostname: "{{ item.key.replace('.','-') }}"
+  when: instance_data.hostname is not defined
+
+- name: set hostname to hostname if defined
+  set_fact:
+    container_vm_hostname: "{{ instance_data.hostname }}"
+  when: instance_data.hostname is defined
 
 - name: get container vm status
   virt:
@@ -202,6 +208,7 @@
     groups: container_hosts
     ansible_ssh_pass: "{{ provider_config.kvm.ssh_pwd }}"
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
+    instance_name: "{{ item.key }}"
   when: provider_config.kvm.ssh_pwd is defined and provider_config.kvm.ssh_user is defined
 
 - name: add container vm {{ container_vm_hostname }} to inventory when private key is defined
@@ -210,6 +217,7 @@
     groups: container_hosts
     ansible_user: "{{ provider_config.kvm.ssh_user }}"
     ansible_ssh_private_key_file: "{{ provider_config.kvm.ssh_private_key }}"
+    instance_name: "{{ item.key }}"
   when: provider_config.kvm.ssh_private_key is defined
 
 - name: Wait for the VM be available
