@@ -1,2 +1,2 @@
 [localhost]
-localhost config_file=../inventory/inventory.yaml
+localhost config_file=../inventory/instances.yaml
